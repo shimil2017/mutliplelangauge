@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, ScrollView, View } from 'react-native';
 import I18n, { getLanguages } from 'react-native-i18n';
+import {connect} from 'react-redux';
 
 // Enable fallbacks if you want `en-US`
 // and `en-GB` to fallback to `en`
@@ -16,11 +17,19 @@ I18n.translations = {
   'es': require('./translations/es'),
 };
 
-export default class First extends Component {
+class First extends Component {
   state = { languages: [] };
 
   componentWillMount() {
-   ///I18n.locale='fr'
+    console.log(this.props.state.lang,"dff");
+    
+   //I18n.locale='fr'
+  }
+  componentWillReceiveProps(nextProps){
+    if(this.props.state.lang!==nextProps.state.lang){
+      I18n.locale=nextProps.state.lang
+    }
+    console.log(nextProps.state.lang,"NEX")
   }
 
   render() {
@@ -37,6 +46,13 @@ export default class First extends Component {
   }
 }
 
+const mapStateToProps=(state)=> {
+
+  return {
+      state
+    }
+}
+export default connect(mapStateToProps,null)(First)
 const styles = StyleSheet.create({
   container: {
     flex: 1,

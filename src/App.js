@@ -4,6 +4,11 @@ import { Platform, StyleSheet, Text, ScrollView, View } from 'react-native';
 import First from './First'
 import Second from './Second'
 import TabNavigator from 'react-native-tab-navigator';
+
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux';
+
+import store from './store.js';
 export default class App extends Component{
 
   constructor(props){
@@ -13,8 +18,10 @@ export default class App extends Component{
     }
   }
   render(){
+    console.log(store.getState(),"store")
     return(
 
+<Provider store={store}>
       <TabNavigator>
   <TabNavigator.Item
     selected={this.state.selectedTab === 'home'}
@@ -32,6 +39,7 @@ export default class App extends Component{
     <Second/>
   </TabNavigator.Item>
 </TabNavigator>
+</Provider>
     )
   }
 }
